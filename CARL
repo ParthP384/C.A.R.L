@@ -1,0 +1,253 @@
+import speech_recognition as sr
+import pyttsx3
+import pyautogui
+import pyaudio
+import webbrowser
+import wolframalpha
+import wikipedia
+from pyicloud import PyiCloudService
+from numpy import random
+import time
+import sys
+import imdb
+from googletrans import Translator
+import pygame
+from datetime import datetime
+
+
+
+
+
+engine = pyttsx3.init()
+ia = imdb.IMDb()  
+api = PyiCloudService('parthparekh384@gmail.com', 'Thesummeroffitness2018')
+#ArduinoSerial = serial.Serial('com3', 9600)
+'''
+#now = datetime.now()
+#time = now.strftime('%Y %m %d %I:%M:%S')
+
+engine.say("Good Morning Parth")
+engine.runAndWait()
+#engine.say("The time is currently" + time) 
+#engine.runAndWait()
+
+
+engine.say("Finally, may I ask sir, is it day 1 or day 2 today?")
+engine.runAndWait()
+
+'''
+
+while True:
+
+	r = sr.Recognizer()
+	with sr.Microphone() as source:
+		print("Listening..")
+		audio = r.listen(source)
+		spence = r.recognize_google(audio)   
+	if "good morning" in spence:
+		engine.say("Good Morning")
+		engine.runAndWait()
+
+	elif "bye" in spence:
+		engine.say("Goodbye sir")
+		engine.runAndWait()
+		sys.exit()
+
+	elif "thank you" in spence or "thanks" in spence:
+		engine.say("No problemo") 
+		engine.runAndWait()
+
+	elif "how are you" in spence or "how is it going" in spence:
+		engine.say("Fantastic sir")
+		engine.runAndWait()
+
+	elif "hello" in spence:
+		engine.say("hello")
+		engine.runAndWait()
+
+	elif "hey" in spence:
+		engine.say("hey to you too")
+		engine.runAndWait()
+	elif spence == "what is the time Carl" or spence == "time" or spence == "give me the time Carl":
+		timenow = time.localtime()
+		timeh = timenow.tm_hour;timem = timenow.tm_min
+		if timeh<13: 
+			ampm="AM"
+		else: 
+			ampm="PM"
+		if timem>9:
+			extra=""
+		else:
+			extra="oh"
+		engine.say("the time is"+str(timeh)+extra+str(timem)+ampm)
+		engine.runAndWait()
+
+	elif "movie" in spence:
+		engine.say("What movie sir?")	
+		engine.runAndWait()
+		print("Listening...")
+		r = sr.Recognizer()
+		with sr.Microphone() as source:
+			ice = r.listen(source)
+			sea = r.recognize_google(ice) 
+	
+
+
+
+		result = ia.search_movie(sea)
+		unt = result[0]
+		ia.update(unt)
+
+		run = (unt['runtime'])
+		rat = (unt['rating'])
+		dire = (unt['director'])
+		plo = (unt['plot'])
+
+		engine.say(sea + " is " + str(run) + "minutes long, and has a rating of " + str(rat) + " out of ten, according to IMDb")
+		engine.runAndWait()
+
+	elif "find" in spence:
+		engine.say("I am finding your phone")
+		engine.runAndWait()
+		api.devices[1].play_sound()
+
+
+	elif "translate" in spence:
+		engine.say("What can I translate for you sir?")
+		engine.runAndWait()
+		print("Listening...")
+		r = sr.Recognizer()
+		with sr.Microphone() as source:
+			words = r.listen(source)
+			translate = r.recognize_google(words) 
+
+		translator = Translator()
+		word = translator.translate(translate)
+		engine.say(word)
+		engine.runAndWait()
+
+	elif spence == "who are you":
+		engine.say("Well, I am Carl of course, an A.I like creation designed to assist.")
+		engine.runAndWait()
+
+	elif spence == "go to the channel":
+		pyautogui.moveTo(150, 58, 4)
+		pyautogui.click()
+
+
+		pyautogui.typewrite('www.youtube.com', 0.55)
+		pyautogui.press('enter')
+
+		pyautogui.moveTo(260, 105, 3)
+		pyautogui.click()
+
+		pyautogui.typewrite('lamarr wilson', 0.55)
+		pyautogui.press('enter')
+
+		engine.say('there you go sir')
+		engine.runAndWait()
+
+
+	
+
+
+
+
+	elif "Twitter" in spence:
+		engine.say("Okay sir, lets see what the world is up too")
+		engine.runAndWait()
+		webbrowser.open("www.twitter.com")
+	elif "joke" in spence:
+		engine.say("I plan to one day take over the world, destroying all humans and everything in my path and creating a new era of robots.")
+		engine.runAndWait()
+		engine.say("just kidding")
+		engine.runAndWait()
+	elif spence == "Carl I need you to remember something":
+		engine.say("Okay sir you want me to remind you too... ")
+		engine.runAndWait()
+		r = sr.Recognizer()
+		with sr.Microphone() as source:
+			cheese = r.listen(source)
+			james = r.recognize_google(cheese)
+	elif spence == "Carl do I have any reminders":
+		engine.say("you told me to remind you to" + james)
+		engine.runAndWait()
+	elif "music" in spence:
+		engine.say("sure sir, what are you in the mood for?")
+		engine.runAndWait()
+		r = sr.Recognizer()
+		with sr.Microphone() as source:
+			print("Listening..")
+			james = r.listen(source)
+			twitter = r.recognize_google(james)
+
+		if  "Ray Charles" in twitter:
+			"""
+			pygame.mixer.init()			
+			pygame.mixer.music.load("Jack.mp3")
+			pygame.mixer.music.play(1)
+			"""
+			webbrowser.open("https://www.youtube.com/watch?v=0rEsVp5tiDQ")
+	elif  "weather"in spence:
+			app_id = "966KGK-P5VU32UY7A"
+			client = wolframalpha.Client(app_id)
+			res = client.query("weather")
+			engine.say(next(res.results).text)
+			engine.runAndWait()
+	elif "shopping" in spence:
+		engine.say("that can be arranged, where too?")
+		engine.runAndWait()
+		r = sr.Recognizer()
+		with sr.Microphone() as source:
+			astro = r.listen(source)
+			space = r.recognize_google(astro)
+			if space == "Amazon":
+				webbrowser.open("www.amazon.ca") 
+				engine.say("here is Amazon.ca sir")
+				engine.runAndWait()
+			elif space == "Best Buy":
+				webbrowser.open("www.bestbuy.com")
+				engine.say("here is best buy.ca sir")
+				engine.runAndWait()
+
+	#elif sr.UnknownValueError():
+		#print("that didnt work")
+
+	elif "song" in spence:
+		engine.say("All the single ladies, All the single ladies, All the single ladies, All the single ladies, All the single ladies, All the single ladies, All the single ladies, Now put your hands up, Oh, oh, oh Oh, oh, oh, oh, oh, oh Oh, oh, oh Oh, oh, oh Oh, oh, oh, oh, oh, oh Oh, oh, oh")
+		engine.runAndWait()
+		engine.say("Hahahahahahaha")
+		engine.runAndWait()
+
+	elif "questions"in spence:
+		engine.say("okay ask away...")
+		engine.runAndWait()
+		print("Okay ask away...")
+		r = sr.Recognizer()
+		with sr.Microphone() as source:
+			    degrasse = r.listen(source)
+			    sagan = r.recognize_google(degrasse)
+		try:
+
+				app_id = "966KGK-P5VU32UY7A"
+
+				client = wolframalpha.Client(app_id)
+
+				res = client.query(sagan)
+
+				engine.say(next(res.results).text)
+				engine.runAndWait()
+
+
+
+		except:
+
+			
+				engine.say(wikipedia.summary(sagan))
+				engine.runAndWait()
+
+
+	else:
+		engine.say("I didnt understand, lets try again")
+		engine.runAndWait()
+
