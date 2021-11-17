@@ -13,14 +13,16 @@ import imdb
 from googletrans import Translator
 import pygame
 from datetime import datetime
+#importing all the libraries to make the program work
 
 
 
 
 
+#initating the google speech to text recognition program 
 engine = pyttsx3.init()
 ia = imdb.IMDb()  
-api = PyiCloudService('parthparekh384@gmail.com', 'Thesummeroffitness2018')
+api = PyiCloudService('parthparekh384@gmail.com', 'passwordlogin')
 #ArduinoSerial = serial.Serial('com3', 9600)
 '''
 #now = datetime.now()
@@ -36,7 +38,7 @@ engine.say("Finally, may I ask sir, is it day 1 or day 2 today?")
 engine.runAndWait()
 
 '''
-
+#true loop
 while True:
 
 	r = sr.Recognizer()
@@ -90,9 +92,6 @@ while True:
 		with sr.Microphone() as source:
 			ice = r.listen(source)
 			sea = r.recognize_google(ice) 
-	
-
-
 
 		result = ia.search_movie(sea)
 		unt = result[0]
@@ -157,11 +156,6 @@ while True:
 		engine.say("Okay sir, lets see what the world is up too")
 		engine.runAndWait()
 		webbrowser.open("www.twitter.com")
-	elif "joke" in spence:
-		engine.say("I plan to one day take over the world, destroying all humans and everything in my path and creating a new era of robots.")
-		engine.runAndWait()
-		engine.say("just kidding")
-		engine.runAndWait()
 	elif spence == "Carl I need you to remember something":
 		engine.say("Okay sir you want me to remind you too... ")
 		engine.runAndWait()
@@ -194,6 +188,7 @@ while True:
 			res = client.query("weather")
 			engine.say(next(res.results).text)
 			engine.runAndWait()
+			
 	elif "shopping" in spence:
 		engine.say("that can be arranged, where too?")
 		engine.runAndWait()
@@ -213,11 +208,6 @@ while True:
 	#elif sr.UnknownValueError():
 		#print("that didnt work")
 
-	elif "song" in spence:
-		engine.say("All the single ladies, All the single ladies, All the single ladies, All the single ladies, All the single ladies, All the single ladies, All the single ladies, Now put your hands up, Oh, oh, oh Oh, oh, oh, oh, oh, oh Oh, oh, oh Oh, oh, oh Oh, oh, oh, oh, oh, oh Oh, oh, oh")
-		engine.runAndWait()
-		engine.say("Hahahahahahaha")
-		engine.runAndWait()
 
 	elif "questions"in spence:
 		engine.say("okay ask away...")
